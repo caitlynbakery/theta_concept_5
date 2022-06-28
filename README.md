@@ -1,16 +1,69 @@
-# theta_concept_5
+# THETA X Concept 5
 
-A new Flutter project.
+This project focuses on getting the captureMode as soon as the application builds. The objective is to change the application's button to either picture or video mode depending on the camera's initial state. 
 
-## Getting Started
+For example, if the camera is on picture mode, the screen should look like this: 
+<img src="docs/images/imagemode.png" width=50%>
 
-This project is a starting point for a Flutter application.
+If the camera is on video mode, the screen changes to this:
+<img src="docs/images/videomode.png" width=50%>
 
-A few resources to get you started if this is your first Flutter project:
+In order to implement this feature, I ran the `GetModeEvent` under the `BlocBuilder` in the main file. Every time the project builds, the application gets the mode of the camera. 
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+```dart
+child: MaterialApp(
+        home: BlocBuilder<CameraUseBloc, CameraUseState>(
+          builder: (context, state) {
+            context.read<CameraUseBloc>().add(GetModeEvent());}))
+```
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Next, if the mode is equal to `image`, the application will display the `ImageScreen`. Alternatively, if the mode is equal to `video`, the application will display the `VideoScreen`. Else, there is a `RefreshScreen`.
+
+```dart
+ if (state.captureMode == 'image') {
+              return const ImageScreen();
+            } else if (state.captureMode == 'video') {
+              return const VideoScreen();
+            } else {
+              return const RefreshScreen();
+            }
+```
+
+## Issues
+
+I implemented an IconButton to display the last thumbnail when the camera is in image mode. I created a variable inside of the State called `showImage` that is set to true inside of the `GetPictureEvent`. If the `showImage` variable is true and there is a `fileUrl`, the application is supposed to display the thumbnail image.
+
+```dart
+   return Expanded(
+            child: context.watch<CameraUseBloc>().state.showImage &&
+                    context.watch<CameraUseBloc>().state.fileUrl.isNotEmpty
+                ? InkWell(
+                    child: Image.network('${state.fileUrl}?type=thumb'),
+                  )
+                : Text('response goes here '));
+```
+
+However, this was not the case as the `GetModeEvent` overrides the state and emits `showImage` as false. Thus, when I clicked on the IconButton to display the image, the application just displayed the Text. 
+
+The current solution is to check if `showImage` is true within the `GetModeEvent` and then run the code to get the `fileUrl`. Next, emit the State with `showImage` set to true and the `fileUrl`. Although this solution showed the thumbnail image, the code is lengthy and not the best implementation of Bloc structure. 
+
+```dart
+ on<GetModeEvent>((event, emit) async {
+      var response = await thetaService.command({
+        'name': 'camera.getOptions',
+        'parameters': {
+          'optionNames': ['captureMode']
+        }
+      });
+    ...
+    if (state.showImage) {
+       ...
+        var fileUrl = convertResponse['results']['entries'][0]['fileUrl'];
+        emit(CameraUseState(
+            message: response.bodyString,
+            captureMode: captureMode,
+            fileUrl: fileUrl,
+            showImage: true));
+```
+
+![thumbnail](docs/images/thumbnail.gif)
