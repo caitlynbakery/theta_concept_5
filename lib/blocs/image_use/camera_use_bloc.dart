@@ -23,8 +23,29 @@ class CameraUseBloc extends Bloc<CameraUseEvent, CameraUseState> {
       });
       var convertResponse = jsonDecode(response.bodyString);
       var captureMode = convertResponse['results']['options']['captureMode'];
-      emit(CameraUseState(
-          message: response.bodyString, captureMode: captureMode));
+      if (state.showImage) {
+        var responsesecond = await thetaService.command({
+          'name': 'camera.listFiles',
+          'parameters': {
+            'fileType': 'image',
+            'startPosition': 0,
+            'entryCount': 1,
+            'maxThumbSize': 0
+          }
+        });
+        var convertResponse = jsonDecode(responsesecond.bodyString);
+        var fileUrl = convertResponse['results']['entries'][0]['fileUrl'];
+        emit(CameraUseState(
+            message: response.bodyString,
+            captureMode: captureMode,
+            fileUrl: fileUrl,
+            showImage: true));
+      } else {
+        emit(CameraUseState(
+            message: response.bodyString,
+            captureMode: captureMode,
+            showImage: false));
+      }
 
       print(captureMode);
       // TODO: implement event handler
@@ -33,22 +54,40 @@ class CameraUseBloc extends Bloc<CameraUseEvent, CameraUseState> {
       var response = await thetaService.command({
         'name': 'camera.takePicture',
       });
-      emit(CameraUseState(message: response.bodyString));
+      emit(CameraUseState(message: response.bodyString, showImage: false));
     });
 
     on<StartCaptureEvent>((event, emit) async {
-      emit(CameraUseState(message: '', isRecording: true));
+      emit(CameraUseState(message: '', isRecording: true, showImage: false));
       var response =
           await thetaService.command({'name': 'camera.startCapture'});
-      emit(CameraUseState(message: response.bodyString, isRecording: true));
+      emit(CameraUseState(
+          message: response.bodyString, isRecording: true, showImage: false));
       print("State from bloc ${state.isRecording}");
       print(response.bodyString);
     });
     on<StopCaptureEvent>((event, emit) async {
-      emit(CameraUseState(message: '', isRecording: false));
+      emit(CameraUseState(message: '', isRecording: false, showImage: false));
       var response = await thetaService.command({'name': 'camera.stopCapture'});
-      emit(CameraUseState(message: response.bodyString, isRecording: false));
+      emit(CameraUseState(
+          message: response.bodyString, isRecording: false, showImage: false));
       print(response.bodyString);
+    });
+    on<GetPictureEvent>((event, emit) async {
+      var response = await thetaService.command({
+        'name': 'camera.listFiles',
+        'parameters': {
+          'fileType': 'image',
+          'startPosition': 0,
+          'entryCount': 1,
+          'maxThumbSize': 0
+        }
+      });
+      var convertResponse = jsonDecode(response.bodyString);
+      var fileUrl = convertResponse['results']['entries'][0]['fileUrl'];
+      emit(CameraUseState(message: '', showImage: true, fileUrl: fileUrl));
+      print(fileUrl);
+      print('${state.showImage} bloc');
     });
   }
 }

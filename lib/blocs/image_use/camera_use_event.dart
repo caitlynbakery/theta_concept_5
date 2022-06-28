@@ -14,3 +14,5 @@ class TakePicEvent extends CameraUseEvent {}
 class StartCaptureEvent extends CameraUseEvent {}
 
 class StopCaptureEvent extends CameraUseEvent {}
+
+class GetPictureEvent extends CameraUseEvent {}
