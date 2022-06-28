@@ -29,5 +29,26 @@ class CameraUseBloc extends Bloc<CameraUseEvent, CameraUseState> {
       print(captureMode);
       // TODO: implement event handler
     });
+    on<TakePicEvent>((event, emit) async {
+      var response = await thetaService.command({
+        'name': 'camera.takePicture',
+      });
+      emit(CameraUseState(message: response.bodyString));
+    });
+
+    on<StartCaptureEvent>((event, emit) async {
+      emit(CameraUseState(message: '', isRecording: true));
+      var response =
+          await thetaService.command({'name': 'camera.startCapture'});
+      emit(CameraUseState(message: response.bodyString, isRecording: true));
+      print("State from bloc ${state.isRecording}");
+      print(response.bodyString);
+    });
+    on<StopCaptureEvent>((event, emit) async {
+      emit(CameraUseState(message: '', isRecording: false));
+      var response = await thetaService.command({'name': 'camera.stopCapture'});
+      emit(CameraUseState(message: response.bodyString, isRecording: false));
+      print(response.bodyString);
+    });
   }
 }

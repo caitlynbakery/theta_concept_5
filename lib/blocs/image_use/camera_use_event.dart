@@ -8,3 +8,9 @@ abstract class CameraUseEvent extends Equatable {
 }
 
 class GetModeEvent extends CameraUseEvent {}
+
+class TakePicEvent extends CameraUseEvent {}
+
+class StartCaptureEvent extends CameraUseEvent {}
+
+class StopCaptureEvent extends CameraUseEvent {}
