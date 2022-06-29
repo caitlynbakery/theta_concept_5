@@ -8,7 +8,7 @@ For example, if the camera is on picture mode, the screen should look like this:
 If the camera is on video mode, the screen changes to this:
 <img src="docs/images/videomode.png" width=50%>
 
-In order to implement this feature, I ran the `GetModeEvent` under the `BlocBuilder` in the main file. Every time the project builds, the application gets the mode of the camera. 
+In order to implement this feature, the `GetModeEvent` runs under the `BlocBuilder` in the main file. Every time the project builds, the application gets the mode of the camera. 
 
 ```dart
 child: MaterialApp(
@@ -31,7 +31,7 @@ Next, if the mode is equal to `image`, the application will display the `ImageSc
 
 ## Issues
 
-I implemented an IconButton to display the last thumbnail when the camera is in image mode. I created a variable inside of the State called `showImage` that is set to true inside of the `GetPictureEvent`. If the `showImage` variable is true and there is a `fileUrl`, the application is supposed to display the thumbnail image.
+An IconButton displays the last thumbnail for an image. The variable inside of the State called `showImage` is set to true inside of the `GetPictureEvent`. If the `showImage` variable is true and there is a `fileUrl`, the application is intended to display the thumbnail image.
 
 ```dart
    return Expanded(
@@ -43,7 +43,7 @@ I implemented an IconButton to display the last thumbnail when the camera is in 
                 : Text('response goes here '));
 ```
 
-However, this was not the case as the `GetModeEvent` overrides the state and emits `showImage` as false. Thus, when I clicked on the IconButton to display the image, the application just displayed the Text. 
+However, this was not the case as the `GetModeEvent` runs after the code rebuilds. The `GetModeEvent` overrides the state and emits `showImage` as false. Thus, when the IconButton is expected to display the image, the application just displays the Text. 
 
 The current solution is to check if `showImage` is true within the `GetModeEvent` and then run the code to get the `fileUrl`. Next, emit the State with `showImage` set to true and the `fileUrl`. Although this solution showed the thumbnail image, the code is lengthy and not the best implementation of Bloc structure. 
 
