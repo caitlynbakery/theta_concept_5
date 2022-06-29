@@ -29,7 +29,7 @@ Next, if the mode is equal to `image`, the application will display the `ImageSc
             }
 ```
 
-## Issues
+## 6/28/22
 
 An IconButton displays the last thumbnail for an image. The variable inside of the State called `showImage` is set to true inside of the `GetPictureEvent`. If the `showImage` variable is true and there is a `fileUrl`, the application is intended to display the thumbnail image.
 
@@ -67,3 +67,14 @@ The current solution is to check if `showImage` is true within the `GetModeEvent
 ```
 
 ![thumbnail](docs/images/thumbnail.gif)
+
+## 6/29/2022
+
+The project was separated into 3 separate Blocs(`camera_use`, `image_screen`, and `video_screen`). The `camera_use` Bloc holds the `GetModeEvent`, the `image_screen` Bloc holds the `TakePicEvent` and `GetPicEvent`, and the `video_screen` has the `StartCaptureEvent` and `StopCaptureEvent`. 
+
+When the video starts/stops, the `IconButton` changes shape to match the video's State. 
+
+<img src="docs/images/startrecord.png" width=40%>
+<img src="docs/images/stoprecord.png" width=40%>
+
+After separating the functionality of the application into the 3 Blocs, the application was intended to run the same. However, there was a problem after merging the branches that the thumbnail button didn't update the response image after the shutter button was pressed. Additionally, if the shutter button is pressed before the thumbnail button, no images will appear. 
