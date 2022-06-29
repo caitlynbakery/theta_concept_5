@@ -72,14 +72,14 @@ The current solution is to check if `showImage` is true within the `GetModeEvent
 
 ## 6/29/2022
 
-The project was separated into 3 separate Blocs(`camera_use`, `image_screen`, and `video_screen`). The `camera_use` Bloc holds the `GetModeEvent`, the `image_screen` Bloc holds the `TakePicEvent` and `GetPicEvent`, and the `video_screen` has the `StartCaptureEvent` and `StopCaptureEvent`. 
+The project is separated into three separate Blocs(`camera_use`, `image_screen`, and `video_screen`). The `camera_use` Bloc holds the `GetModeEvent`, the `image_screen` Bloc holds the `TakePicEvent` and `GetPicEvent`, and the `video_screen` has the `StartCaptureEvent` and `StopCaptureEvent`. 
 
 When the video starts/stops, the `IconButton` changes shape to match the video's State. 
 
 <img src="docs/images/startrecord.png" width=40%>
 <img src="docs/images/stoprecord.png" width=40%>
 
-Although the application has 3 separate Blocs, it calls 2 Blocs on 1 screen, which isn't ideal. For example, for the image screen, the button for getting the camera mode calls the `CameraUseBloc`. 
+Although the application has three separate Blocs, it calls two Blocs on one screen. For example, for the image screen, the button for getting the camera mode calls the `CameraUseBloc`. 
 
 ```dart
  IconButton(
@@ -103,6 +103,10 @@ Contrastly, the button for taking the picture calls the `ImageScreenBloc`.
                       Icons.circle_outlined,
                     )),
 ```
+
+Below is a diagram illustrating the flow of the Bloc structure. Both the Image Screen and the Video Screen Blocs access the Camera Use Bloc. In this way, the Camera Use Bloc connects the two screens together. The Camera Use Bloc accesses the camera's mode so that each of the screens will change depending on the mode of the physical camera.
+
+![flow chart](docs/images/Imagescreen.png)
 
 Although the application calls multiple Blocs in one screen, it successfully performs the functionality as expected and gets the camera's mode.
 
