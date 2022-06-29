@@ -77,4 +77,38 @@ When the video starts/stops, the `IconButton` changes shape to match the video's
 <img src="docs/images/startrecord.png" width=40%>
 <img src="docs/images/stoprecord.png" width=40%>
 
-After separating the functionality of the application into the 3 Blocs, the application was intended to run the same. However, there was a problem after merging the branches that the thumbnail button didn't update the response image after the shutter button was pressed. Additionally, if the shutter button is pressed before the thumbnail button, no images will appear. 
+Although the application has 3 separate Blocs, it calls 2 Blocs on 1 screen, which isn't ideal. For example, for the image screen, the button for getting the camera mode calls the `CameraUseBloc`. 
+
+```dart
+ IconButton(
+                  onPressed: () {
+                    context.read<CameraUseBloc>().add(GetModeEvent());
+                    // captureMode = state.captureMode;
+                  },
+                  icon: Icon(Icons.refresh),
+                ),
+```
+
+Contrastly, the button for taking the picture calls the `ImageScreenBloc`. 
+
+```dart
+   IconButton(
+                    iconSize: 200,
+                    onPressed: () {
+                      context.read<ImageScreenBloc>().add(ImageTakePicEvent());
+                    },
+                    icon: Icon(
+                      Icons.circle_outlined,
+                    )),
+```
+
+Although the application calls multiple Blocs in one screen, it successfully performs the functionality as expected and gets the camera's mode.
+
+
+
+
+
+
+
+
+

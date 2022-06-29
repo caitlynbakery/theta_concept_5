@@ -23,9 +23,7 @@ class MyApp extends StatelessWidget {
       providers: [
         BlocProvider<CameraUseBloc>(
             create: (BuildContext context) => CameraUseBloc()),
-        BlocProvider(
-            create: (BuildContext context) => ImageScreenBloc(
-                cameraUseBloc: BlocProvider.of<CameraUseBloc>(context))),
+        BlocProvider(create: (BuildContext context) => ImageScreenBloc()),
         BlocProvider(create: (BuildContext context) => VideoScreenBloc())
       ],
       child: MaterialApp(
