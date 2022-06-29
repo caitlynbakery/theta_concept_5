@@ -17,11 +17,7 @@ class ImageScreenBloc extends Bloc<ImageScreenEvent, ImageScreenState> {
 
   ImageScreenBloc({required this.cameraUseBloc})
       : super(ImageScreenState.initial()) {
-    addSubscription = cameraUseBloc.stream.listen((state) {
-      if (state.captureMode == 'image') {
-        print('image');
-      }
-    });
+    addSubscription = cameraUseBloc.stream.listen((state) {});
 
     var chopper = ChopperClient(
         services: [ThetaService.create()], converter: const JsonConverter());
