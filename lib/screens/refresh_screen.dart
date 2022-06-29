@@ -20,9 +20,9 @@ class RefreshScreen extends StatelessWidget {
                 onPressed: () {
                   context.read<CameraUseBloc>().add(GetModeEvent());
                 },
-                child: Text('Refresh'),
+                child: const Text('Refresh'),
               ),
-              Center(
+              const Center(
                   child: SizedBox(
                       width: 200,
                       height: 200,
