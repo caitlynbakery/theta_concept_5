@@ -5,7 +5,7 @@ import 'package:theta_concept_5/screens/image_screen.dart';
 import 'package:theta_concept_5/screens/refresh_screen.dart';
 import 'package:theta_concept_5/screens/video_screen.dart';
 
-import 'blocs/image_use/camera_use_bloc.dart';
+import 'blocs/camera_use/camera_use_bloc.dart';
 import 'components/recording_button.dart';
 
 void main() {

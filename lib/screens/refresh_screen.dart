@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../blocs/image_use/camera_use_bloc.dart';
+import '../blocs/camera_use/camera_use_bloc.dart';
 
 class RefreshScreen extends StatelessWidget {
   const RefreshScreen({
