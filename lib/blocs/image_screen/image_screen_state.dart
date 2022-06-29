@@ -15,23 +15,20 @@ class ImageScreenState extends Equatable {
   });
 
   factory ImageScreenState.initial() =>
-      ImageScreenState(message: "", showImage: false);
+      const ImageScreenState(message: "initial", showImage: false);
 
   @override
-  List<Object> get props => [];
+  List<Object> get props => [message];
 
   @override
   bool get stringify => true;
 
   ImageScreenState copyWith({
     String? message,
-    bool? showImage,
-    String? fileUrl,
   }) {
     return ImageScreenState(
       message: message ?? this.message,
-      showImage: showImage ?? this.showImage,
-      fileUrl: fileUrl ?? this.fileUrl,
+      showImage: showImage,
     );
   }
 }

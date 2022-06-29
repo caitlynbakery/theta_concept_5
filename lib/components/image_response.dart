@@ -13,14 +13,13 @@ class ImageResponse extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<ImageScreenBloc, ImageScreenState>(
       builder: (context, state) {
-        if (context.watch<ImageScreenBloc>().state.showImage &&
-            context.watch<ImageScreenBloc>().state.fileUrl.isNotEmpty) {
-          print(state.fileUrl);
-          var fileUrl = '${state.fileUrl}?type=thumb';
-          return Image.network(fileUrl);
-        } else {
-          return Text('response goes here ');
-        }
+        return Expanded(
+            child: context.watch<ImageScreenBloc>().state.showImage &&
+                    context.watch<ImageScreenBloc>().state.fileUrl.isNotEmpty
+                ? InkWell(
+                    child: Image.network('${state.fileUrl}?type=thumb'),
+                  )
+                : Text('response goes here '));
       },
     );
   }

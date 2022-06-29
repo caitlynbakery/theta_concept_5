@@ -12,13 +12,7 @@ part 'image_screen_event.dart';
 part 'image_screen_state.dart';
 
 class ImageScreenBloc extends Bloc<ImageScreenEvent, ImageScreenState> {
-  final CameraUseBloc cameraUseBloc;
-  StreamSubscription? addSubscription;
-
-  ImageScreenBloc({required this.cameraUseBloc})
-      : super(ImageScreenState.initial()) {
-    addSubscription = cameraUseBloc.stream.listen((state) {});
-
+  ImageScreenBloc() : super(ImageScreenState.initial()) {
     var chopper = ChopperClient(
         services: [ThetaService.create()], converter: const JsonConverter());
     final thetaService = chopper.getService<ThetaService>();
