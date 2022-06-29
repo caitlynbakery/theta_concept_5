@@ -22,7 +22,7 @@ class RefreshScreen extends StatelessWidget {
                 },
                 child: Text('Refresh'),
               ),
-              Center(
+              const Center(
                   child: SizedBox(
                       width: 200,
                       height: 200,

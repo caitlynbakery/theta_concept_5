@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:theta_concept_5/blocs/image_screen/image_screen_bloc.dart';
 
 import '../blocs/camera_use/camera_use_bloc.dart';
 
@@ -10,11 +11,11 @@ class ImageResponse extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CameraUseBloc, CameraUseState>(
+    return BlocBuilder<ImageScreenBloc, ImageScreenState>(
       builder: (context, state) {
         return Expanded(
-            child: context.watch<CameraUseBloc>().state.showImage &&
-                    context.watch<CameraUseBloc>().state.fileUrl.isNotEmpty
+            child: context.watch<ImageScreenBloc>().state.showImage &&
+                    context.watch<ImageScreenBloc>().state.fileUrl.isNotEmpty
                 ? InkWell(
                     child: Image.network('${state.fileUrl}?type=thumb'),
                   )

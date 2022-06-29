@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:theta_concept_5/blocs/image_screen/image_screen_bloc.dart';
 import 'package:theta_concept_5/screens/image_screen.dart';
 import 'package:theta_concept_5/screens/refresh_screen.dart';
 import 'package:theta_concept_5/screens/video_screen.dart';
@@ -20,7 +21,10 @@ class MyApp extends StatelessWidget {
     return MultiBlocProvider(
       providers: [
         BlocProvider<CameraUseBloc>(
-            create: (BuildContext context) => CameraUseBloc())
+            create: (BuildContext context) => CameraUseBloc()),
+        BlocProvider(
+            create: (BuildContext context) => ImageScreenBloc(
+                cameraUseBloc: BlocProvider.of<CameraUseBloc>(context)))
       ],
       child: MaterialApp(
         home: BlocBuilder<CameraUseBloc, CameraUseState>(

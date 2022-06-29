@@ -4,18 +4,16 @@ class CameraUseState extends Equatable {
   final String message;
   final String captureMode;
   final bool isRecording;
-  final bool showImage;
-  final String fileUrl;
 
-  const CameraUseState(
-      {required this.message,
-      this.captureMode = "none",
-      this.isRecording = false,
-      required this.showImage,
-      this.fileUrl = ""});
+  const CameraUseState({
+    required this.message,
+    this.captureMode = "none",
+    this.isRecording = false,
+  });
 
-  factory CameraUseState.initial() =>
-      const CameraUseState(message: 'initial', showImage: false);
+  factory CameraUseState.initial() => const CameraUseState(
+        message: 'initial',
+      );
   @override
   List<Object> get props => [message];
 
@@ -26,6 +24,7 @@ class CameraUseState extends Equatable {
     String? message,
   }) {
     return CameraUseState(
-        message: message ?? this.message, showImage: showImage);
+      message: message ?? this.message,
+    );
   }
 }
