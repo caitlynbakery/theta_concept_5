@@ -17,8 +17,11 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CameraUseBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CameraUseBloc>(
+            create: (BuildContext context) => CameraUseBloc())
+      ],
       child: MaterialApp(
         home: BlocBuilder<CameraUseBloc, CameraUseState>(
           builder: (context, state) {
