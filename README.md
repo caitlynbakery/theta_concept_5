@@ -3,9 +3,11 @@
 This project focuses on getting the captureMode as soon as the application builds. The objective is to change the application's button to either picture or video mode depending on the camera's initial state. 
 
 For example, if the camera is on picture mode, the screen should look like this: 
+
 <img src="docs/images/imagemode.png" width=50%>
 
 If the camera is on video mode, the screen changes to this:
+
 <img src="docs/images/videomode.png" width=50%>
 
 In order to implement this feature, the `GetModeEvent` runs under the `BlocBuilder` in the main file. Every time the project builds, the application gets the mode of the camera. 
