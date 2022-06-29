@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:theta_concept_5/blocs/image_screen/image_screen_bloc.dart';
+import 'package:theta_concept_5/blocs/video_screen/video_screen_bloc.dart';
 import 'package:theta_concept_5/screens/image_screen.dart';
 import 'package:theta_concept_5/screens/refresh_screen.dart';
 import 'package:theta_concept_5/screens/video_screen.dart';
 
-import 'blocs/image_use/camera_use_bloc.dart';
+import 'blocs/camera_use/camera_use_bloc.dart';
 import 'components/recording_button.dart';
 
 void main() {
@@ -17,8 +19,15 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) => CameraUseBloc(),
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<CameraUseBloc>(
+            create: (BuildContext context) => CameraUseBloc()),
+        BlocProvider(
+            create: (BuildContext context) => ImageScreenBloc(
+                cameraUseBloc: BlocProvider.of<CameraUseBloc>(context))),
+        BlocProvider(create: (BuildContext context) => VideoScreenBloc())
+      ],
       child: MaterialApp(
         home: BlocBuilder<CameraUseBloc, CameraUseState>(
           builder: (context, state) {

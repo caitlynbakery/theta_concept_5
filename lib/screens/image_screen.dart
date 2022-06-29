@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:theta_concept_5/blocs/image_screen/image_screen_bloc.dart';
 
-import '../blocs/image_use/camera_use_bloc.dart';
+import '../blocs/camera_use/camera_use_bloc.dart';
 import '../components/image_response.dart';
 
 class ImageScreen extends StatelessWidget {
@@ -11,7 +12,7 @@ class ImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<CameraUseBloc, CameraUseState>(
+    return BlocBuilder<ImageScreenBloc, ImageScreenState>(
       builder: (context, state) {
         return Scaffold(
           body: Column(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -33,7 +34,7 @@ class ImageScreen extends StatelessWidget {
                 IconButton(
                     iconSize: 200,
                     onPressed: () {
-                      context.read<CameraUseBloc>().add(TakePicEvent());
+                      context.read<ImageScreenBloc>().add(ImageTakePicEvent());
                     },
                     icon: Icon(
                       Icons.circle_outlined,
@@ -44,8 +45,9 @@ class ImageScreen extends StatelessWidget {
               children: [
                 IconButton(
                     onPressed: () {
-                      context.read<CameraUseBloc>().add(GetPictureEvent());
-                      print('image screen ${state.showImage}');
+                      context
+                          .read<ImageScreenBloc>()
+                          .add(ImageGetPictureEvent());
                     },
                     icon: Icon(Icons.image))
               ],
