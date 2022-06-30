@@ -110,8 +110,9 @@ Below is a diagram illustrating the flow of the Bloc structure. Both the Image S
 
 Although the application calls multiple Blocs in one screen, it successfully performs the functionality as expected and gets the camera's mode.
 
+Here is a test shot taken with the app on the RICOH THETA X at 5.5K resolution.
 
-
+![test shot](docs/images/test_shot2.jpg)
 
 
 
